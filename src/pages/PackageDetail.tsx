@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { travelPackages, detailedPackage } from '../utils/mockData';
+import { travelPackages } from '../utils/mockData';
 import { initScrollAnimations } from '../utils/animations';
 import { toast } from 'sonner';
 
@@ -28,9 +28,20 @@ const PackageDetail: React.FC = () => {
     };
   }, []);
   
-  // In a real application, you would fetch the package details based on the ID
-  // Here we're just using the detailed package from our mock data
-  const pkg = detailedPackage;
+  // Find the current package based on ID
+  const currentPackage = travelPackages.find(pkg => pkg.id === id);
+  
+  // If no package is found, use the first one (fallback)
+  const pkg = currentPackage || travelPackages[0];
+  
+  // Create images array for the package (current implementation uses mock data)
+  const packageImages = [
+    pkg.image, 
+    // Add additional images for each package
+    `https://images.unsplash.com/photo-${pkg.id === 'paris-romance' ? '1499856871958-5b9357976b82' : '1544413164-80c62a184ff3'}?q=80&w=800&h=600&auto=format&fit=crop`,
+    `https://images.unsplash.com/photo-${pkg.id === 'paris-romance' ? '1503917988258-f87a78e3c995' : '1533105079760-9530fa6d2b19'}?q=80&w=800&h=600&auto=format&fit=crop`,
+    `https://images.unsplash.com/photo-${pkg.id === 'paris-romance' ? '1520939817895-060bdaf4fe1b' : '1533309480040-6d01eb91902a'}?q=80&w=800&h=600&auto=format&fit=crop`
+  ];
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -58,11 +69,41 @@ const PackageDetail: React.FC = () => {
     }, 1500);
   };
   
+  // Generate sample itinerary if not available
+  const itinerary = Array(7).fill(null).map((_, i) => ({
+    day: i + 1,
+    title: i === 0 ? 'Arrival & Welcome Dinner' : 
+           i === 6 ? 'Farewell & Departure' : 
+           `Explore ${pkg.location} - Day ${i + 1}`,
+    description: i === 0 ? `Arrive in ${pkg.location}, transfer to your hotel, and settle in. In the evening, enjoy a welcome dinner at a local restaurant.` :
+                 i === 6 ? `Morning at leisure for last-minute shopping. Farewell lunch before transfer to the airport for departure.` :
+                 `Experience the local culture and attractions with guided tours and free time to explore on your own.`
+  }));
+  
+  // Generate sample inclusions and exclusions
+  const inclusions = [
+    'Accommodation in a 4-star hotel',
+    'Daily breakfast, 2 lunches, and 3 dinners',
+    'Airport transfers and transportation for scheduled activities',
+    'Professional English-speaking guides',
+    'Skip-the-line access to major attractions',
+    'Local experiences and cultural activities',
+    '24/7 emergency assistance'
+  ];
+  
+  const exclusions = [
+    'International airfare',
+    'Travel insurance',
+    'Optional activities',
+    'Meals not mentioned in the inclusions',
+    'Personal expenses and gratuities'
+  ];
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      {/* Header with Image Gallery */}
+      {/* Header */}
       <header className="pt-24 bg-travel-navy">
         <div className="container-custom py-8">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -96,7 +137,7 @@ const PackageDetail: React.FC = () => {
       <section className="py-8 bg-muted">
         <div className="container-custom">
           <div className="relative rounded-xl overflow-hidden h-[400px] md:h-[500px] mb-4">
-            {pkg.images.map((image, index) => (
+            {packageImages.map((image, index) => (
               <div
                 key={index}
                 className={`absolute inset-0 transition-opacity duration-500 ${
@@ -113,7 +154,7 @@ const PackageDetail: React.FC = () => {
             
             <div className="absolute inset-x-0 bottom-0 flex justify-center p-4">
               <div className="flex space-x-2 bg-black/30 rounded-full px-3 py-2">
-                {pkg.images.map((_, index) => (
+                {packageImages.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
@@ -127,7 +168,7 @@ const PackageDetail: React.FC = () => {
             </div>
             
             <button
-              onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? pkg.images.length - 1 : prev - 1))}
+              onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? packageImages.length - 1 : prev - 1))}
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center focus:outline-none"
               aria-label="Previous image"
             >
@@ -137,7 +178,7 @@ const PackageDetail: React.FC = () => {
             </button>
             
             <button
-              onClick={() => setCurrentImageIndex((prev) => (prev === pkg.images.length - 1 ? 0 : prev + 1))}
+              onClick={() => setCurrentImageIndex((prev) => (prev === packageImages.length - 1 ? 0 : prev + 1))}
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center focus:outline-none"
               aria-label="Next image"
             >
@@ -148,7 +189,7 @@ const PackageDetail: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-4 gap-2">
-            {pkg.images.map((image, index) => (
+            {packageImages.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
@@ -177,7 +218,7 @@ const PackageDetail: React.FC = () => {
               
               <h2 className="text-2xl font-bold mb-4 animate-on-scroll">Itinerary</h2>
               <div className="space-y-6 mb-8">
-                {pkg.itinerary.map((day) => (
+                {itinerary.map((day) => (
                   <div key={day.day} className="border-l-4 border-primary pl-4 animate-on-scroll">
                     <h3 className="font-semibold text-xl mb-1">Day {day.day}: {day.title}</h3>
                     <p className="text-muted-foreground">{day.description}</p>
@@ -226,7 +267,7 @@ const PackageDetail: React.FC = () => {
                 <div className="mb-6">
                   <h4 className="font-medium mb-2">Inclusions:</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                    {pkg.inclusions.map((item, index) => (
+                    {inclusions.map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -235,7 +276,7 @@ const PackageDetail: React.FC = () => {
                 <div>
                   <h4 className="font-medium mb-2">Exclusions:</h4>
                   <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                    {pkg.exclusions.map((item, index) => (
+                    {exclusions.map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>

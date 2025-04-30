@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
@@ -76,7 +75,7 @@ const Navbar: React.FC = () => {
     >
       <div className="container-custom flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <h1 className="text-2xl font-bold text-primary">GlobeTrotter</h1>
+          <h1 className="text-2xl font-bold text-primary">JR Travels</h1>
         </Link>
 
         {/* Desktop Navigation */}
