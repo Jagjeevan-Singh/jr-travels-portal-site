@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import NavbarAuth from './NavbarAuth';
 
 interface NavItem {
   label: string;
@@ -113,6 +114,7 @@ const Navbar: React.FC = () => {
           <Link to="/search" className="text-foreground hover:text-primary transition-colors">
             Search
           </Link>
+          <NavbarAuth />
           <Link to="/contact" className="btn-primary">
             Book Now
           </Link>
@@ -184,6 +186,7 @@ const Navbar: React.FC = () => {
             <Link to="/search" className="flex items-center space-x-2 hover:text-primary transition-colors" onClick={toggleMenu}>
               Search
             </Link>
+            <NavbarAuth />
             <Link to="/contact" className="btn-primary text-center" onClick={toggleMenu}>
               Book Now
             </Link>
