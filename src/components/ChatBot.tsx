@@ -49,39 +49,76 @@ export function ChatBot() {
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI response
+    // Process user message and get response
+    const botResponse = generateResponse(userMessage.content);
+    
     setTimeout(() => {
-      const botResponses: Record<string, string> = {
-        default: "I'm here to help with your travel questions! You can ask about destinations, packages, or travel tips.",
-        hello: "Hello! How can I assist with your travel plans today?",
-        hi: "Hi there! Looking to plan a trip? I can help with that!",
-        packages: "We offer a variety of travel packages ranging from adventure trips to relaxing beach getaways. You can browse all our packages in the Packages section.",
-        price: "Our packages start from $499 for weekend getaways and range up to $5000 for luxury international trips. You can use filters on our search page to find packages within your budget.",
-        destinations: "We offer trips to over 50 destinations worldwide including Europe, Asia, Africa, North and South America. Popular destinations include Bali, Paris, New York, and Cape Town.",
-        booking: "You can book a trip by browsing our packages, selecting one that interests you, and clicking the 'Book Now' button. You'll need to create an account if you haven't already.",
-        contact: "You can reach our customer service team at support@jrtravels.com or by phone at +1-800-555-1234. Our office hours are Monday to Friday, 9am to 6pm EST."
-      };
-
-      const lowercaseInput = userMessage.content.toLowerCase();
-      let responseText = botResponses.default;
-      
-      // Check if any keywords match
-      for (const [keyword, response] of Object.entries(botResponses)) {
-        if (lowercaseInput.includes(keyword)) {
-          responseText = response;
-          break;
-        }
-      }
-
       const botMessage: Message = {
         id: Date.now().toString(),
-        content: responseText,
+        content: botResponse,
         isBot: true,
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setIsLoading(false);
-    }, 1000);
+    }, 800);
+  };
+
+  // Function to generate responses based on user input
+  const generateResponse = (userInput: string): string => {
+    const input = userInput.toLowerCase();
+    
+    // Define response patterns
+    if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+      return "Hello! How can I help you plan your next adventure with JR Travels today?";
+    }
+    
+    if (input.includes('package') || input.includes('trip') || input.includes('vacation')) {
+      return "We have a variety of travel packages ranging from weekend getaways to multi-week international adventures. Our packages start from $499. Would you like me to recommend some popular destinations?";
+    }
+    
+    if (input.includes('price') || input.includes('cost') || input.includes('expensive')) {
+      return "Our packages range from $499 for weekend getaways to $5000+ for luxury international trips. Each package is clearly priced with no hidden fees. You can also filter by your budget in our search section.";
+    }
+    
+    if (input.includes('destination') || input.includes('place') || input.includes('country') || input.includes('where')) {
+      return "We offer trips to over 50 destinations worldwide! Popular choices include Bali, Paris, Tokyo, New York, Cape Town, and the Maldives. Is there a specific region you're interested in exploring?";
+    }
+    
+    if (input.includes('book') || input.includes('reserve') || input.includes('payment')) {
+      return "Booking with us is easy! Simply browse our packages, select the one you love, and click 'Book Now'. You'll need to create an account if you haven't already. We accept all major credit cards and offer flexible payment options for select destinations.";
+    }
+    
+    if (input.includes('cancel') || input.includes('refund') || input.includes('policy')) {
+      return "Our cancellation policy varies by package. Generally, cancellations made 60+ days before departure receive a full refund minus a small processing fee. Cancellations made 30-60 days prior receive a 50% refund, and less than 30 days may not be eligible for refunds. Travel insurance is always recommended!";
+    }
+    
+    if (input.includes('contact') || input.includes('phone') || input.includes('email') || input.includes('call')) {
+      return "You can reach our support team by phone at +91 9910633621 or email at jagjeevan004@gmail.com. Our office hours are Monday to Friday, 9am to 6pm. We also offer 24/7 emergency support for travelers currently on a trip with us.";
+    }
+    
+    if (input.includes('about') || input.includes('company') || input.includes('who')) {
+      return "JR Travels is a premium travel agency founded with a passion for creating unforgettable travel experiences. We specialize in curated travel packages with personalized itineraries, local expertise, and 24/7 support. Check out our About page to learn more about our story!";
+    }
+    
+    if (input.includes('custom') || input.includes('tailor') || input.includes('personalize')) {
+      return "Yes, we offer fully customizable travel experiences! Simply contact our team with your preferences, budget, and travel dates, and our experts will craft a personalized itinerary just for you.";
+    }
+    
+    if (input.includes('discount') || input.includes('deal') || input.includes('offer') || input.includes('sale')) {
+      return "We regularly offer seasonal promotions and early booking discounts. Sign up for our newsletter on the homepage to be the first to know about special deals. We also have a loyalty program for returning travelers!";
+    }
+    
+    if (input.includes('thank')) {
+      return "You're very welcome! Is there anything else I can help you with regarding your travel plans?";
+    }
+    
+    if (input.includes('bye') || input.includes('goodbye')) {
+      return "Thank you for chatting with JR Travels! Feel free to return anytime you need travel assistance. Have a wonderful day!";
+    }
+    
+    // Default response
+    return "I'm here to help with all your travel questions! You can ask about our destinations, packages, booking process, or special requirements. How can I assist you with your travel plans today?";
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

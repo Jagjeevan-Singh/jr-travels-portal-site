@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -72,8 +71,8 @@ const Contact: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Phone</h3>
               <p className="text-muted-foreground mb-4">Our travel experts are available to help you</p>
-              <a href="tel:+1234567890" className="text-primary hover:underline">+1 (234) 567-890</a>
-              <p className="text-sm text-muted-foreground mt-2">Monday - Friday: 9am - 8pm EST</p>
+              <a href="tel:+919910633621" className="text-primary hover:underline">+91 9910633621</a>
+              <p className="text-sm text-muted-foreground mt-2">Monday - Friday: 9am - 8pm IST</p>
             </div>
             
             <div className="card-travel p-6 flex flex-col items-center text-center animate-on-scroll" style={{ animationDelay: '0.2s' }}>
@@ -84,7 +83,7 @@ const Contact: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Email</h3>
               <p className="text-muted-foreground mb-4">For inquiries and booking assistance</p>
-              <a href="mailto:info@globetrotter.com" className="text-primary hover:underline">info@globetrotter.com</a>
+              <a href="mailto:jagjeevan004@gmail.com" className="text-primary hover:underline">jagjeevan004@gmail.com</a>
               <p className="text-sm text-muted-foreground mt-2">We typically respond within 24 hours</p>
             </div>
             
@@ -97,8 +96,8 @@ const Contact: React.FC = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Address</h3>
               <p className="text-muted-foreground mb-4">Visit our headquarters</p>
-              <p className="text-foreground">1234 Travel Avenue, Suite 567</p>
-              <p className="text-foreground">New York, NY 10001, USA</p>
+              <p className="text-foreground">JR Travels Office</p>
+              <p className="text-foreground">New Delhi, India</p>
               <p className="text-sm text-muted-foreground mt-2">By appointment only</p>
             </div>
           </div>

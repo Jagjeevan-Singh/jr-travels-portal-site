@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from "sonner";
 
 interface SearchBarProps {
   onSearch: (query: string, filters: Filters) => void;
@@ -23,14 +24,25 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!query.trim()) {
+      toast.warning("Please enter a search term");
+      return;
+    }
+    
+    // Call the onSearch function with the current query and filters
     onSearch(query, filters);
     
     // If we're not on the packages page, navigate to it with the search query
-    if (window.location.pathname !== '/packages') {
+    if (location.pathname !== '/packages') {
       navigate(`/packages?q=${encodeURIComponent(query)}`);
+    } else {
+      // Show success toast when searching on the packages page
+      toast.success(`Searching for "${query}"`);
     }
   };
 
