@@ -1,4 +1,3 @@
-
 import { TravelPackage } from '../components/TravelCard';
 
 export const travelPackages: TravelPackage[] = [
@@ -11,6 +10,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1299,
     rating: 5,
     description: 'Experience the city of love with guided tours of iconic landmarks, wine tastings, and Seine river cruise.',
+    type: 'city'
   },
   {
     id: 'bali-paradise',
@@ -21,6 +21,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1499,
     rating: 5,
     description: 'Relax on pristine beaches, visit ancient temples, and enjoy luxury accommodations in this tropical paradise.',
+    type: 'beach'
   },
   {
     id: 'japan-explorer',
@@ -31,6 +32,7 @@ export const travelPackages: TravelPackage[] = [
     price: 2199,
     rating: 5,
     description: 'Discover the perfect blend of ancient traditions and modern wonders across Tokyo, Kyoto, and Osaka.',
+    type: 'cultural'
   },
   {
     id: 'egypt-wonders',
@@ -41,6 +43,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1799,
     rating: 4,
     description: 'Explore the pyramids, cruise the Nile River, and uncover the mysteries of ancient Egyptian civilization.',
+    type: 'cultural'
   },
   {
     id: 'safari-kenya',
@@ -51,6 +54,7 @@ export const travelPackages: TravelPackage[] = [
     price: 2499,
     rating: 5,
     description: 'Witness the incredible wildlife of Africa in their natural habitat with expert guides and luxury camping.',
+    type: 'safari'
   },
   {
     id: 'santorini-getaway',
@@ -61,6 +65,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1599,
     rating: 5,
     description: 'Stay in iconic white-washed villas, enjoy breathtaking views, and experience authentic Greek cuisine.',
+    type: 'beach'
   },
   {
     id: 'amazon-expedition',
@@ -71,6 +76,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1899,
     rating: 4,
     description: 'Journey deep into the world\'s largest rainforest to discover incredible biodiversity and indigenous cultures.',
+    type: 'adventure'
   },
   {
     id: 'new-york-city',
@@ -81,6 +87,7 @@ export const travelPackages: TravelPackage[] = [
     price: 1299,
     rating: 4,
     description: 'Take a bite out of the Big Apple with Broadway shows, iconic landmarks, and world-class dining experiences.',
+    type: 'city'
   },
 ];
 

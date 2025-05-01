@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ export interface TravelPackage {
   price: number;
   rating: number;
   description: string;
+  type: string; // Added the type property
 }
 
 interface TravelCardProps {
