@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -78,7 +77,7 @@ const Auth = () => {
           title: "Login successful",
           description: "Welcome back!",
         });
-        navigate("/");
+        navigate("/"); // Redirect to home page after login
       }
     } catch (error: any) {
       toast({
@@ -106,6 +105,7 @@ const Auth = () => {
           title: "Signup successful",
           description: "Please check your email for verification",
         });
+        navigate("/"); // Redirect to home page after signup
       }
     } catch (error: any) {
       toast({

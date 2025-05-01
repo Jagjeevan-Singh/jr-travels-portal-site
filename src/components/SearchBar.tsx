@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
   onSearch: (query: string, filters: Filters) => void;
@@ -21,10 +22,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     type: 'any',
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(query, filters);
+    
+    // If we're not on the packages page, navigate to it with the search query
+    if (window.location.pathname !== '/packages') {
+      navigate(`/packages?q=${encodeURIComponent(query)}`);
+    }
   };
 
   const handleFilterChange = (name: keyof Filters, value: any) => {
