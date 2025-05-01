@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
       <div className="container-custom py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h2 className="text-xl font-bold mb-4">GlobeTrotter</h2>
+            <h2 className="text-xl font-bold mb-4">JR Travels</h2>
             <p className="text-gray-300 mb-4">
               Explore the world with us. We offer unforgettable travel experiences to destinations worldwide.
             </p>
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} GlobeTrotter. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} JR Travels. All rights reserved.</p>
           <div className="mt-2 flex justify-center space-x-4">
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>

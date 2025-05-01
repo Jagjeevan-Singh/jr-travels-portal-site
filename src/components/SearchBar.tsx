@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from "sonner";
+import { Search } from 'lucide-react';
 
 interface SearchBarProps {
   onSearch: (query: string, filters: Filters) => void;
@@ -48,17 +49,28 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const handleFilterChange = (name: keyof Filters, value: any) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
+    
+    // If we're on the packages page, apply the filter immediately
+    if (location.pathname === '/packages' && query.trim()) {
+      setTimeout(() => {
+        onSearch(query, { ...filters, [name]: value });
+        toast.info("Filters updated");
+      }, 300);
+    }
   };
 
   return (
     <div className="w-full bg-card shadow-md rounded-xl p-4 md:p-6">
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-          <div className="flex-grow">
+          <div className="flex-grow relative">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-muted-foreground" />
+            </div>
             <input
               type="text"
               placeholder="Search destinations, activities, or packages..."
-              className="w-full p-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-10 p-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -66,9 +78,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           <button
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
             type="button"
-            className="lg:hidden btn-outline"
+            className="lg:hidden btn-outline flex items-center justify-center gap-2"
           >
-            {isFiltersOpen ? 'Hide Filters' : 'Show Filters'}
+            <span>{isFiltersOpen ? 'Hide Filters' : 'Show Filters'}</span>
+            <svg className={`w-4 h-4 transition-transform ${isFiltersOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
           </button>
           <button type="submit" className="btn-primary flex-shrink-0">
             Search

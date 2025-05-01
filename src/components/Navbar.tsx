@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import NavbarAuth from './NavbarAuth';
 
@@ -50,6 +51,7 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +62,10 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -68,10 +74,17 @@ const Navbar: React.FC = () => {
     setActiveDropdown(activeDropdown === label ? null : label);
   };
 
+  const isActiveLink = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-background/95 backdrop-blur-md shadow-md py-2' : 'py-4 bg-transparent'
+        scrolled ? 'bg-background/95 backdrop-blur-md shadow-md py-2' : 'py-4 bg-gradient-to-b from-black/40 to-transparent'
       }`}
     >
       <div className="container-custom flex items-center justify-between">
@@ -83,13 +96,26 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <div key={item.label} className="relative group">
-              <div 
-                className="flex items-center space-x-1 navbar-link py-2 cursor-pointer"
-                onClick={() => item.children && handleDropdownToggle(item.label)}
-              >
-                <span>{item.label}</span>
-                {item.children && <ChevronDown className="h-4 w-4" />}
-              </div>
+              {!item.children ? (
+                <Link 
+                  to={item.href} 
+                  className={`py-2 font-medium transition-colors hover:text-primary ${
+                    isActiveLink(item.href) ? 'text-primary' : 'text-foreground'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <div 
+                  className={`flex items-center space-x-1 py-2 cursor-pointer font-medium transition-colors hover:text-primary ${
+                    isActiveLink(item.href) ? 'text-primary' : 'text-foreground'
+                  }`}
+                  onClick={() => item.children && handleDropdownToggle(item.label)}
+                >
+                  <span>{item.label}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+              )}
               
               {item.children && (
                 <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-card opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left">
@@ -98,7 +124,9 @@ const Navbar: React.FC = () => {
                       <Link
                         key={child.label}
                         to={child.href}
-                        className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
+                        className={`block px-4 py-2 text-sm hover:bg-muted transition-colors ${
+                          isActiveLink(child.href) ? 'text-primary' : 'text-foreground'
+                        }`}
                       >
                         {child.label}
                       </Link>
@@ -111,26 +139,36 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/search" className="text-foreground hover:text-primary transition-colors">
+          <Link 
+            to="/search" 
+            className="text-foreground hover:text-primary transition-colors"
+          >
             Search
           </Link>
           <NavbarAuth />
-          <Link to="/contact" className="btn-primary">
+          <Link 
+            to="/contact" 
+            className="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-full transition-colors"
+          >
             Book Now
           </Link>
         </div>
 
         {/* Mobile Navigation Toggle */}
         <button
-          className={`md:hidden flex flex-col justify-center items-center w-10 h-10 relative z-10 ${
-            isMenuOpen ? 'hamburger-active' : ''
-          }`}
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10 relative z-10"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <span className="hamburger-line mb-1.5"></span>
-          <span className="hamburger-line mb-1.5"></span>
-          <span className="hamburger-line"></span>
+          <span 
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`}
+          />
+          <span 
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`}
+          />
+          <span 
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          />
         </button>
       </div>
 
@@ -146,7 +184,9 @@ const Navbar: React.FC = () => {
               {!item.children ? (
                 <Link
                   to={item.href}
-                  className="text-lg font-medium hover:text-primary transition-colors"
+                  className={`text-lg font-medium transition-colors hover:text-primary ${
+                    isActiveLink(item.href) ? 'text-primary' : ''
+                  }`}
                   onClick={toggleMenu}
                 >
                   {item.label}
@@ -155,7 +195,9 @@ const Navbar: React.FC = () => {
                 <>
                   <button
                     onClick={() => handleDropdownToggle(item.label)}
-                    className="flex items-center justify-between w-full text-lg font-medium hover:text-primary transition-colors"
+                    className={`flex items-center justify-between w-full text-lg font-medium transition-colors hover:text-primary ${
+                      isActiveLink(item.href) ? 'text-primary' : ''
+                    }`}
                   >
                     {item.label}
                     <ChevronDown className={`h-5 w-5 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
@@ -170,7 +212,9 @@ const Navbar: React.FC = () => {
                         <Link
                           key={child.label}
                           to={child.href}
-                          className="text-foreground/80 hover:text-primary transition-colors"
+                          className={`text-foreground/80 hover:text-primary transition-colors ${
+                            isActiveLink(child.href) ? 'text-primary' : ''
+                          }`}
                           onClick={toggleMenu}
                         >
                           {child.label}
@@ -187,7 +231,11 @@ const Navbar: React.FC = () => {
               Search
             </Link>
             <NavbarAuth />
-            <Link to="/contact" className="btn-primary text-center" onClick={toggleMenu}>
+            <Link 
+              to="/contact" 
+              className="bg-primary hover:bg-primary/80 text-white py-2 px-4 rounded-full text-center" 
+              onClick={toggleMenu}
+            >
               Book Now
             </Link>
           </div>

@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { initScrollAnimations } from '../utils/animations';
 import { toast } from 'sonner';
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -65,34 +67,27 @@ const Contact: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             <div className="card-travel p-6 flex flex-col items-center text-center animate-on-scroll">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+                <Phone className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Phone</h3>
               <p className="text-muted-foreground mb-4">Our travel experts are available to help you</p>
-              <a href="tel:+919910633621" className="text-primary hover:underline">+91 9910633621</a>
+              <a href="tel:+919910633621" className="text-primary hover:underline font-medium">+91 9910633621</a>
               <p className="text-sm text-muted-foreground mt-2">Monday - Friday: 9am - 8pm IST</p>
             </div>
             
             <div className="card-travel p-6 flex flex-col items-center text-center animate-on-scroll" style={{ animationDelay: '0.2s' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+                <Mail className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Email</h3>
               <p className="text-muted-foreground mb-4">For inquiries and booking assistance</p>
-              <a href="mailto:jagjeevan004@gmail.com" className="text-primary hover:underline">jagjeevan004@gmail.com</a>
+              <a href="mailto:jagjeevan004@gmail.com" className="text-primary hover:underline font-medium">jagjeevan004@gmail.com</a>
               <p className="text-sm text-muted-foreground mt-2">We typically respond within 24 hours</p>
             </div>
             
             <div className="card-travel p-6 flex flex-col items-center text-center animate-on-scroll" style={{ animationDelay: '0.4s' }}>
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                <MapPin className="h-8 w-8 text-primary" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Address</h3>
               <p className="text-muted-foreground mb-4">Visit our headquarters</p>
@@ -202,16 +197,15 @@ const Contact: React.FC = () => {
               </p>
               
               <div className="h-[400px] rounded-xl overflow-hidden border border-border shadow-sm">
-                {/* Replace with actual Google Maps iframe */}
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215373064797!2d-73.98897402346278!3d40.75883377138239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1714607572936!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.5204794872803!2d77.20658381508524!3d28.642583282413318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xcdee88e47393c3f1!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1663931323952!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen={false}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="GlobeTrotter Office Location"
+                  title="JR Travels Office Location"
                 ></iframe>
               </div>
             </div>

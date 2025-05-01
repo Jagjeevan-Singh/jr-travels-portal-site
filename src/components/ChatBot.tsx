@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Input } from '@/components/ui/input';
 import { Bot, Send, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 interface Message {
   id: string;
@@ -49,10 +50,10 @@ export function ChatBot() {
     setInput('');
     setIsLoading(true);
 
-    // Process user message and get response
-    const botResponse = generateResponse(userMessage.content);
-    
-    setTimeout(() => {
+    try {
+      // Process user message and get response
+      const botResponse = await generateResponse(userMessage.content);
+      
       const botMessage: Message = {
         id: Date.now().toString(),
         content: botResponse,
@@ -60,12 +61,19 @@ export function ChatBot() {
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+    } catch (error) {
+      console.error('Error in chat:', error);
+      toast.error('Something went wrong with the chat assistant');
+    } finally {
       setIsLoading(false);
-    }, 800);
+    }
   };
 
   // Function to generate responses based on user input
-  const generateResponse = (userInput: string): string => {
+  const generateResponse = async (userInput: string): Promise<string> => {
+    // Simulate network delay for more realistic conversation flow
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
     const input = userInput.toLowerCase();
     
     // Define response patterns
@@ -132,7 +140,7 @@ export function ChatBot() {
       {/* Chat button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 rounded-full size-12 p-0 flex items-center justify-center shadow-md z-50"
+        className="fixed bottom-4 right-4 rounded-full size-12 p-0 flex items-center justify-center shadow-lg z-50 bg-primary hover:bg-primary/90"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         {isOpen ? <X /> : <Bot />}
@@ -147,7 +155,9 @@ export function ChatBot() {
       >
         <Card className="shadow-lg border-2">
           <CardHeader className="p-4 bg-primary text-primary-foreground">
-            <CardTitle className="text-lg">JR Travel Assistant</CardTitle>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Bot size={18} /> JR Travel Assistant
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             <div className="h-80 overflow-y-auto p-4 space-y-4">
