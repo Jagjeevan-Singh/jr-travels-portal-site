@@ -69,64 +69,95 @@ export function ChatBot() {
     }
   };
 
-  // Function to generate responses based on user input
+  // Enhanced response generator with more pattern matching
   const generateResponse = async (userInput: string): Promise<string> => {
     // Simulate network delay for more realistic conversation flow
     await new Promise(resolve => setTimeout(resolve, 800));
     
     const input = userInput.toLowerCase();
     
-    // Define response patterns
-    if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+    // Greetings
+    if (input.includes('hello') || input.includes('hi') || input.includes('hey') || input.includes('greetings')) {
       return "Hello! How can I help you plan your next adventure with JR Travels today?";
     }
     
-    if (input.includes('package') || input.includes('trip') || input.includes('vacation')) {
-      return "We have a variety of travel packages ranging from weekend getaways to multi-week international adventures. Our packages start from $499. Would you like me to recommend some popular destinations?";
+    // Packages
+    if (input.includes('package') || input.includes('trip') || input.includes('vacation') || input.includes('holiday') || input.includes('travel')) {
+      return "We have a variety of travel packages ranging from weekend getaways to multi-week international adventures. Our packages start from $499. Would you like me to recommend some popular destinations based on your interests?";
     }
     
-    if (input.includes('price') || input.includes('cost') || input.includes('expensive')) {
-      return "Our packages range from $499 for weekend getaways to $5000+ for luxury international trips. Each package is clearly priced with no hidden fees. You can also filter by your budget in our search section.";
+    // Pricing
+    if (input.includes('price') || input.includes('cost') || input.includes('expensive') || input.includes('cheap') || input.includes('budget') || input.includes('afford')) {
+      return "Our packages range from $499 for weekend getaways to $5000+ for luxury international trips. Each package is clearly priced with no hidden fees. You can also filter by your budget in our search section. We're committed to offering options for all budgets!";
     }
     
-    if (input.includes('destination') || input.includes('place') || input.includes('country') || input.includes('where')) {
-      return "We offer trips to over 50 destinations worldwide! Popular choices include Bali, Paris, Tokyo, New York, Cape Town, and the Maldives. Is there a specific region you're interested in exploring?";
+    // Destinations
+    if (input.includes('destination') || input.includes('place') || input.includes('country') || input.includes('where') || input.includes('location')) {
+      return "We offer trips to over 50 destinations worldwide! Popular choices include Bali, Paris, Tokyo, New York, Cape Town, and the Maldives. Is there a specific region you're interested in exploring? We can provide tailored recommendations based on your preferences.";
     }
     
-    if (input.includes('book') || input.includes('reserve') || input.includes('payment')) {
-      return "Booking with us is easy! Simply browse our packages, select the one you love, and click 'Book Now'. You'll need to create an account if you haven't already. We accept all major credit cards and offer flexible payment options for select destinations.";
+    // Booking Process
+    if (input.includes('book') || input.includes('reserve') || input.includes('payment') || input.includes('booking') || input.includes('pay')) {
+      return "Booking with us is easy! Simply browse our packages, select the one you love, and click 'Book Now'. You'll need to create an account if you haven't already. We accept all major credit cards and offer flexible payment options for select destinations. Need help with a specific booking? I'd be happy to assist!";
     }
     
-    if (input.includes('cancel') || input.includes('refund') || input.includes('policy')) {
-      return "Our cancellation policy varies by package. Generally, cancellations made 60+ days before departure receive a full refund minus a small processing fee. Cancellations made 30-60 days prior receive a 50% refund, and less than 30 days may not be eligible for refunds. Travel insurance is always recommended!";
+    // Cancellation/Refund Policy
+    if (input.includes('cancel') || input.includes('refund') || input.includes('policy') || input.includes('money back') || input.includes('change') || input.includes('reschedule')) {
+      return "Our cancellation policy varies by package. Generally, cancellations made 60+ days before departure receive a full refund minus a small processing fee. Cancellations made 30-60 days prior receive a 50% refund, and less than 30 days may not be eligible for refunds. Travel insurance is always recommended! For specific policy details on your package, please contact our support team.";
     }
     
-    if (input.includes('contact') || input.includes('phone') || input.includes('email') || input.includes('call')) {
-      return "You can reach our support team by phone at +91 9910633621 or email at jagjeevan004@gmail.com. Our office hours are Monday to Friday, 9am to 6pm. We also offer 24/7 emergency support for travelers currently on a trip with us.";
+    // Contact Information
+    if (input.includes('contact') || input.includes('phone') || input.includes('email') || input.includes('call') || input.includes('support') || input.includes('help')) {
+      return "You can reach our support team by phone at +91 9910633621 or email at jagjeevan004@gmail.com. Our office hours are Monday to Friday, 9am to 6pm. We also offer 24/7 emergency support for travelers currently on a trip with us. We pride ourselves on responsive customer service!";
     }
     
-    if (input.includes('about') || input.includes('company') || input.includes('who')) {
-      return "JR Travels is a premium travel agency founded with a passion for creating unforgettable travel experiences. We specialize in curated travel packages with personalized itineraries, local expertise, and 24/7 support. Check out our About page to learn more about our story!";
+    // About the Company
+    if (input.includes('about') || input.includes('company') || input.includes('who') || input.includes('history') || input.includes('background')) {
+      return "JR Travels is a premium travel agency founded with a passion for creating unforgettable travel experiences. We specialize in curated travel packages with personalized itineraries, local expertise, and 24/7 support. Our experienced team has collectively visited over 100 countries! Check out our About page to learn more about our story and mission.";
     }
     
-    if (input.includes('custom') || input.includes('tailor') || input.includes('personalize')) {
-      return "Yes, we offer fully customizable travel experiences! Simply contact our team with your preferences, budget, and travel dates, and our experts will craft a personalized itinerary just for you.";
+    // Customization Options
+    if (input.includes('custom') || input.includes('tailor') || input.includes('personalize') || input.includes('special') || input.includes('specific') || input.includes('requirement')) {
+      return "Yes, we offer fully customizable travel experiences! We understand that every traveler is unique. Simply contact our team with your preferences, budget, and travel dates, and our experts will craft a personalized itinerary just for you. From dietary requirements to special celebrations, we can accommodate your needs.";
     }
     
-    if (input.includes('discount') || input.includes('deal') || input.includes('offer') || input.includes('sale')) {
-      return "We regularly offer seasonal promotions and early booking discounts. Sign up for our newsletter on the homepage to be the first to know about special deals. We also have a loyalty program for returning travelers!";
+    // Discounts and Deals
+    if (input.includes('discount') || input.includes('deal') || input.includes('offer') || input.includes('sale') || input.includes('promotion') || input.includes('coupon') || input.includes('savings')) {
+      return "We regularly offer seasonal promotions and early booking discounts. Sign up for our newsletter on the homepage to be the first to know about special deals. We also have a loyalty program for returning travelers! Currently, we're offering 15% off select European destinations for summer bookings made before the end of this month.";
     }
     
+    // Safety and COVID
+    if (input.includes('safe') || input.includes('covid') || input.includes('health') || input.includes('pandemic') || input.includes('vaccine') || input.includes('requirement') || input.includes('restriction')) {
+      return "Your safety is our top priority. We closely monitor travel advisories and health guidelines for all our destinations. Our packages comply with local health protocols, and we provide up-to-date information on entry requirements, including any vaccination or testing needs. We also offer flexible booking policies during uncertain times. Feel free to ask about specific destination requirements!";
+    }
+    
+    // Activities and Experiences
+    if (input.includes('activity') || input.includes('experience') || input.includes('adventure') || input.includes('tour') || input.includes('excursion') || input.includes('attraction')) {
+      return "Our packages include a wide range of activities tailored to different interests! From adrenaline-pumping adventures like zip-lining and scuba diving to cultural experiences such as cooking classes and guided historical tours. Many of our packages include exclusive experiences that aren't available to the general public. What type of activities are you interested in?";
+    }
+
+    // Accommodations
+    if (input.includes('hotel') || input.includes('resort') || input.includes('stay') || input.includes('accommodation') || input.includes('room') || input.includes('lodging')) {
+      return "We partner with quality accommodations ranging from boutique hotels to luxury resorts. All properties are personally vetted by our team to ensure they meet our standards for comfort, cleanliness, service, and location. Many packages include accommodation options at different price points so you can choose what suits your preferences and budget.";
+    }
+
+    // Family Travel
+    if (input.includes('family') || input.includes('kid') || input.includes('child') || input.includes('baby') || input.includes('toddler')) {
+      return "We offer many family-friendly packages designed with both parents and children in mind! These include accommodations with family rooms or connecting options, activities appropriate for different age groups, and often kids' clubs or childcare services. We can also help arrange special requirements like cribs, high chairs, or kid-friendly meal options.";
+    }
+    
+    // Gratitude
     if (input.includes('thank')) {
-      return "You're very welcome! Is there anything else I can help you with regarding your travel plans?";
+      return "You're very welcome! It's my pleasure to help with your travel plans. Is there anything else I can assist you with regarding your next adventure with JR Travels?";
     }
     
-    if (input.includes('bye') || input.includes('goodbye')) {
-      return "Thank you for chatting with JR Travels! Feel free to return anytime you need travel assistance. Have a wonderful day!";
+    // Farewell
+    if (input.includes('bye') || input.includes('goodbye') || input.includes('see you') || input.includes('later') || input.includes('farewell')) {
+      return "Thank you for chatting with JR Travels! Feel free to return anytime you need travel assistance. Have a wonderful day, and we hope to help you plan your next adventure soon!";
     }
     
-    // Default response
-    return "I'm here to help with all your travel questions! You can ask about our destinations, packages, booking process, or special requirements. How can I assist you with your travel plans today?";
+    // Default response for unmatched queries
+    return "I'm here to help with all your travel questions! You can ask about our destinations, packages, booking process, or special requirements. If you're looking for something specific that I haven't addressed, you can also reach our team directly at jagjeevan004@gmail.com or +91 9910633621. How can I assist with your travel plans today?";
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -14,6 +14,7 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ChatBot from "./components/ChatBot";
+import Search from "./pages/Search";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/packages" element={<Packages />} />
             <Route path="/packages/:id" element={<PackageDetail />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoute />}>
               {/* Add protected routes here */}
             </Route>

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ChevronDown, Search } from 'lucide-react';
 import NavbarAuth from './NavbarAuth';
 
 interface NavItem {
@@ -19,22 +19,22 @@ const navItems: NavItem[] = [
     label: 'Destinations',
     href: '/destinations',
     children: [
-      { label: 'Europe', href: '/destinations/europe' },
-      { label: 'Asia', href: '/destinations/asia' },
-      { label: 'Americas', href: '/destinations/americas' },
-      { label: 'Africa', href: '/destinations/africa' },
-      { label: 'Oceania', href: '/destinations/oceania' }
+      { label: 'Europe', href: '/packages?region=europe' },
+      { label: 'Asia', href: '/packages?region=asia' },
+      { label: 'Americas', href: '/packages?region=americas' },
+      { label: 'Africa', href: '/packages?region=africa' },
+      { label: 'Oceania', href: '/packages?region=oceania' }
     ]
   },
   {
     label: 'Packages',
     href: '/packages',
     children: [
-      { label: 'Adventure', href: '/packages/adventure' },
-      { label: 'Beach', href: '/packages/beach' },
-      { label: 'City Break', href: '/packages/city-break' },
-      { label: 'Cultural', href: '/packages/cultural' },
-      { label: 'Safari', href: '/packages/safari' }
+      { label: 'Adventure', href: '/packages?type=adventure' },
+      { label: 'Beach', href: '/packages?type=beach' },
+      { label: 'City Break', href: '/packages?type=city' },
+      { label: 'Cultural', href: '/packages?type=cultural' },
+      { label: 'Safari', href: '/packages?type=safari' }
     ]
   },
   {
@@ -52,6 +52,7 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,6 +65,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setActiveDropdown(null);
   }, [location]);
 
   const toggleMenu = () => {
@@ -79,6 +81,10 @@ const Navbar: React.FC = () => {
       return location.pathname === '/';
     }
     return location.pathname.startsWith(path);
+  };
+
+  const handleSearchClick = () => {
+    navigate('/search');
   };
 
   return (
@@ -106,27 +112,36 @@ const Navbar: React.FC = () => {
                   {item.label}
                 </Link>
               ) : (
-                <div 
-                  className={`flex items-center space-x-1 py-2 cursor-pointer font-medium transition-colors hover:text-primary ${
-                    isActiveLink(item.href) ? 'text-primary' : 'text-foreground'
-                  }`}
-                  onClick={() => item.children && handleDropdownToggle(item.label)}
-                >
-                  <span>{item.label}</span>
-                  <ChevronDown className="h-4 w-4" />
+                <div className="flex items-center space-x-1">
+                  <Link 
+                    to={item.href}
+                    className={`py-2 font-medium transition-colors hover:text-primary ${
+                      isActiveLink(item.href) ? 'text-primary' : 'text-foreground'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                  <button 
+                    onClick={() => handleDropdownToggle(item.label)}
+                    className="focus:outline-none p-1 hover:text-primary"
+                  >
+                    <ChevronDown className={`h-4 w-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
+                  </button>
                 </div>
               )}
               
               {item.children && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-card opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left">
+                <div 
+                  className={`absolute left-0 mt-1 w-48 rounded-md shadow-lg bg-card border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 ${
+                    activeDropdown === item.label ? 'opacity-100 visible' : ''
+                  }`}
+                >
                   <div className="rounded-md py-1">
                     {item.children.map((child) => (
                       <Link
                         key={child.label}
                         to={child.href}
-                        className={`block px-4 py-2 text-sm hover:bg-muted transition-colors ${
-                          isActiveLink(child.href) ? 'text-primary' : 'text-foreground'
-                        }`}
+                        className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
                       >
                         {child.label}
                       </Link>
@@ -139,12 +154,13 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Link 
-            to="/search" 
+          <button 
+            onClick={handleSearchClick} 
             className="text-foreground hover:text-primary transition-colors"
+            aria-label="Search"
           >
-            Search
-          </Link>
+            <Search className="h-5 w-5" />
+          </button>
           <NavbarAuth />
           <Link 
             to="/contact" 
@@ -155,21 +171,30 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Toggle */}
-        <button
-          className="md:hidden flex flex-col justify-center items-center w-10 h-10 relative z-10"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <span 
-            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`}
-          />
-          <span 
-            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`}
-          />
-          <span 
-            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
-          />
-        </button>
+        <div className="md:hidden flex items-center space-x-2">
+          <button 
+            onClick={handleSearchClick} 
+            className="p-2 hover:text-primary transition-colors"
+            aria-label="Search"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+          <button
+            className="flex flex-col justify-center items-center w-10 h-10 relative z-10"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <span 
+              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`}
+            />
+            <span 
+              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`}
+            />
+            <span 
+              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation Menu */}
@@ -193,15 +218,23 @@ const Navbar: React.FC = () => {
                 </Link>
               ) : (
                 <>
-                  <button
-                    onClick={() => handleDropdownToggle(item.label)}
-                    className={`flex items-center justify-between w-full text-lg font-medium transition-colors hover:text-primary ${
-                      isActiveLink(item.href) ? 'text-primary' : ''
-                    }`}
-                  >
-                    {item.label}
-                    <ChevronDown className={`h-5 w-5 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
-                  </button>
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to={item.href}
+                      className={`text-lg font-medium transition-colors hover:text-primary ${
+                        isActiveLink(item.href) ? 'text-primary' : ''
+                      }`}
+                      onClick={toggleMenu}
+                    >
+                      {item.label}
+                    </Link>
+                    <button
+                      onClick={() => handleDropdownToggle(item.label)}
+                      className="p-1 focus:outline-none"
+                    >
+                      <ChevronDown className={`h-5 w-5 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
+                    </button>
+                  </div>
                   <div
                     className={`overflow-hidden transition-all duration-300 ${
                       activeDropdown === item.label ? 'max-h-60' : 'max-h-0'
@@ -227,9 +260,16 @@ const Navbar: React.FC = () => {
             </div>
           ))}
           <div className="mt-8 pt-4 border-t border-border flex flex-col space-y-4">
-            <Link to="/search" className="flex items-center space-x-2 hover:text-primary transition-colors" onClick={toggleMenu}>
-              Search
-            </Link>
+            <button 
+              onClick={() => {
+                handleSearchClick();
+                toggleMenu();
+              }} 
+              className="flex items-center space-x-2 hover:text-primary transition-colors"
+            >
+              <Search className="h-5 w-5" />
+              <span>Search</span>
+            </button>
             <NavbarAuth />
             <Link 
               to="/contact" 
