@@ -1,27 +1,315 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JR Travels</title>
-    <meta name="description" content="JR Travels - Explore the world with us" />
-    <meta name="author" content="JR Travles" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JR Travels</title>
+  <meta name="description" content="JR Travels - Explore the world with us">
+  <meta name="author" content="JR Travels">
 
-    <meta property="og:title" content="JR Travels" />
-    <meta property="og:description" content="Explore the world with JR Travels" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://cdn.dotpe.in/longtail/store-logo/8758918/6Yd2k8L9.webp" />
+  <meta property="og:title" content="JR Travels">
+  <meta property="og:description" content="Explore the world with JR Travels">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cdn.dotpe.in/longtail/store-logo/8758918/6Yd2k8L9.webp">
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@jr_travels" />
-    <meta name="twitter:image" content="https://cdn.dotpe.in/longtail/store-logo/8758918/6Yd2k8L9.webp" />
-  </head>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jr_travels">
+  <meta name="twitter:image" content="https://cdn.dotpe.in/longtail/store-logo/8758918/6Yd2k8L9.webp">
+  
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="container-custom">
+      <div class="navbar-content">
+        <a href="index.html" class="navbar-logo">JR Travels</a>
+        <nav class="navbar-menu" id="navbar-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">Destinations <span class="dropdown-icon">▼</span></a>
+              <div class="dropdown-menu">
+                <a href="packages.html?region=europe" class="dropdown-item">Europe</a>
+                <a href="packages.html?region=asia" class="dropdown-item">Asia</a>
+                <a href="packages.html?region=americas" class="dropdown-item">Americas</a>
+                <a href="packages.html?region=africa" class="dropdown-item">Africa</a>
+                <a href="packages.html?region=oceania" class="dropdown-item">Oceania</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">Packages <span class="dropdown-icon">▼</span></a>
+              <div class="dropdown-menu">
+                <a href="packages.html?type=adventure" class="dropdown-item">Adventure</a>
+                <a href="packages.html?type=beach" class="dropdown-item">Beach</a>
+                <a href="packages.html?type=city" class="dropdown-item">City Break</a>
+                <a href="packages.html?type=cultural" class="dropdown-item">Cultural</a>
+                <a href="packages.html?type=safari" class="dropdown-item">Safari</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="navbar-actions">
+          <button id="search-toggle" class="search-toggle" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          </button>
+          <button id="mobile-toggle" class="mobile-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="search-container" id="search-container">
+      <div class="container-custom">
+        <form action="search.html" method="get" class="search-form">
+          <input type="text" name="q" placeholder="Search destinations, activities, or packages..." required>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </header>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-video">
+      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1920&auto=format&fit=crop">
+        <source src="https://player.vimeo.com/external/369156453.sd.mp4?s=3374ff246a9acae78a298b0e35782160f9066f97&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container-custom hero-content">
+      <h1 class="animate-fade-in">Explore the World <span class="text-primary">With Us</span></h1>
+      <p class="animate-fade-in delay-200">Discover breathtaking destinations and unforgettable experiences tailored just for you.</p>
+      <div class="hero-buttons animate-fade-in delay-400">
+        <a href="packages.html" class="btn-primary">Start Your Journey</a>
+        <a href="about.html" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Destinations -->
+  <section class="section bg-muted">
+    <div class="container-custom">
+      <h2 class="section-title animate-on-scroll">Popular Destinations</h2>
+      <p class="section-subtitle animate-on-scroll">Explore our most sought-after travel destinations around the globe</p>
+
+      <div class="destinations-grid">
+        <a href="destinations.html?id=dest1" class="destination-card animate-on-scroll">
+          <img src="https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?q=80&w=1000&auto=format&fit=crop" alt="Paris">
+          <div class="destination-overlay"></div>
+          <div class="destination-content">
+            <h3>Paris, France</h3>
+            <p>Experience the magic of the City of Light</p>
+          </div>
+        </a>
+        <a href="destinations.html?id=dest2" class="destination-card animate-on-scroll">
+          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1000&auto=format&fit=crop" alt="Bali">
+          <div class="destination-overlay"></div>
+          <div class="destination-content">
+            <h3>Bali, Indonesia</h3>
+            <p>Tropical paradise with stunning beaches and rich culture</p>
+          </div>
+        </a>
+        <a href="destinations.html?id=dest3" class="destination-card animate-on-scroll">
+          <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1000&auto=format&fit=crop" alt="New York">
+          <div class="destination-overlay"></div>
+          <div class="destination-content">
+            <h3>New York, USA</h3>
+            <p>The city that never sleeps awaits your adventure</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="destinations.html" class="btn-primary">View All Destinations</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Travel Packages -->
+  <section class="section">
+    <div class="container-custom">
+      <h2 class="section-title animate-on-scroll">Featured Travel Packages</h2>
+      <p class="section-subtitle animate-on-scroll">Discover our handpicked selection of premium travel experiences</p>
+
+      <div class="packages-grid" id="featured-packages">
+        <!-- Packages will be loaded via JavaScript -->
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="packages.html" class="btn-primary">Explore All Packages</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax Call to Action -->
+  <section class="parallax" data-speed="0.3">
+    <div class="parallax-overlay"></div>
+    <div class="container-custom text-center text-white">
+      <h2 class="animate-on-scroll">Ready for Your Next Adventure?</h2>
+      <p class="animate-on-scroll">Let us help you create memories that last a lifetime. From exotic destinations to unique experiences, we've got you covered.</p>
+      <a href="contact.html" class="btn-accent animate-on-scroll">Contact Us Today</a>
+    </div>
+  </section>
+
+  <!-- Statistics Counter Section -->
+  <section class="section bg-travel-navy text-white">
+    <div class="container-custom">
+      <div class="stats-grid">
+        <div class="stat-item animate-on-scroll">
+          <div class="stat-number"><span class="counter" data-target="15000">0</span>+</div>
+          <p class="stat-label">Happy Travelers</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="animation-delay: 0.2s;">
+          <div class="stat-number"><span class="counter" data-target="120">0</span>+</div>
+          <p class="stat-label">Destinations</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="animation-delay: 0.4s;">
+          <div class="stat-number"><span class="counter" data-target="500">0</span>+</div>
+          <p class="stat-label">Travel Packages</p>
+        </div>
+        <div class="stat-item animate-on-scroll" style="animation-delay: 0.6s;">
+          <div class="stat-number"><span class="counter" data-target="10">0</span></div>
+          <p class="stat-label">Years of Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section">
+    <div class="container-custom">
+      <h2 class="section-title animate-on-scroll">What Our Travelers Say</h2>
+      <p class="section-subtitle animate-on-scroll">Hear from adventurers who've experienced our journeys firsthand</p>
+
+      <div class="testimonial-carousel animate-on-scroll" id="testimonial-carousel">
+        <!-- Testimonials will be loaded via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="section bg-travel-teal text-white">
+    <div class="container-custom text-center">
+      <h2 class="animate-on-scroll">Stay Updated</h2>
+      <p class="animate-on-scroll">Subscribe to our newsletter for travel tips, exclusive offers, and inspiration for your next journey.</p>
+      <form class="newsletter-form animate-on-scroll">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m18 15-6-6-6 6"></path>
+    </svg>
+  </button>
+
+  <!-- Chat Bot -->
+  <div class="chatbot" id="chatbot">
+    <button class="chatbot-toggle" id="chatbot-toggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chatbot-toggle-open">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chatbot-toggle-close">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="chatbot-container" id="chatbot-container">
+      <div class="chatbot-header">
+        <h3>Travel Assistant</h3>
+        <p>Ask me anything about your travel plans!</p>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages"></div>
+      <form class="chatbot-input" id="chatbot-form">
+        <input type="text" placeholder="Type your message..." id="chatbot-message-input" required>
+        <button type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container-custom">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h2>JR Travels</h2>
+          <p>Explore the world with us. We offer unforgettable travel experiences to destinations worldwide.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html">Travel Packages</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Popular Destinations</h3>
+          <ul>
+            <li><a href="destinations.html?id=paris">Paris, France</a></li>
+            <li><a href="destinations.html?id=bali">Bali, Indonesia</a></li>
+            <li><a href="destinations.html?id=new-york">New York, USA</a></li>
+            <li><a href="destinations.html?id=tokyo">Tokyo, Japan</a></li>
+            <li><a href="destinations.html?id=santorini">Santorini, Greece</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-newsletter">
+          <h3>Newsletter</h3>
+          <p>Subscribe to get special offers and travel tips.</p>
+          <form>
+            <input type="email" placeholder="Your email">
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> JR Travels. All rights reserved.</p>
+        <div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
 </html>

@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Package Detail - JR Travels</title>
+  <meta name="description" content="Detailed information about our travel packages - JR Travels">
+  <meta name="author" content="JR Travels">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Additional styles for package detail page */
+    .package-hero {
+      height: 60vh;
+      min-height: 400px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      color: white;
+    }
+
+    .package-hero-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .package-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .package-hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+      z-index: 0;
+    }
+
+    .package-hero-content {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 3rem;
+    }
+
+    .package-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 992px) {
+      .package-detail-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    .package-info-card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .package-feature {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .package-feature-icon {
+      width: 3rem;
+      height: 3rem;
+      background-color: rgba(81, 145, 250, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .package-booking-card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 2rem;
+    }
+
+    .package-price-display {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+    }
+
+    .day-itinerary {
+      border-left: 2px solid var(--primary);
+      padding-left: 1.5rem;
+      padding-bottom: 2rem;
+      position: relative;
+    }
+
+    .day-itinerary:last-child {
+      padding-bottom: 0;
+    }
+
+    .day-itinerary:before {
+      content: '';
+      position: absolute;
+      left: -0.5625rem;
+      top: 0;
+      width: 1.125rem;
+      height: 1.125rem;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    .day-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      height: 200px;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .review-card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-avatar {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .review-rating {
+      display: flex;
+      gap: 0.25rem;
+      margin-top: 0.25rem;
+    }
+
+    .review-date {
+      color: var(--muted-foreground);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    .related-packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="container-custom">
+      <div class="navbar-content">
+        <a href="index.html" class="navbar-logo">JR Travels</a>
+        <nav class="navbar-menu" id="navbar-menu">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle">Destinations <span class="dropdown-icon">▼</span></a>
+              <div class="dropdown-menu">
+                <a href="packages.html?region=europe" class="dropdown-item">Europe</a>
+                <a href="packages.html?region=asia" class="dropdown-item">Asia</a>
+                <a href="packages.html?region=americas" class="dropdown-item">Americas</a>
+                <a href="packages.html?region=africa" class="dropdown-item">Africa</a>
+                <a href="packages.html?region=oceania" class="dropdown-item">Oceania</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle active">Packages <span class="dropdown-icon">▼</span></a>
+              <div class="dropdown-menu">
+                <a href="packages.html?type=adventure" class="dropdown-item">Adventure</a>
+                <a href="packages.html?type=beach" class="dropdown-item">Beach</a>
+                <a href="packages.html?type=city" class="dropdown-item">City Break</a>
+                <a href="packages.html?type=cultural" class="dropdown-item">Cultural</a>
+                <a href="packages.html?type=safari" class="dropdown-item">Safari</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="navbar-actions">
+          <button id="search-toggle" class="search-toggle" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          </button>
+          <button id="mobile-toggle" class="mobile-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="search-container" id="search-container">
+      <div class="container-custom">
+        <form action="search.html" method="get" class="search-form">
+          <input type="text" name="q" placeholder="Search destinations, activities, or packages..." required>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="package-detail" id="package-detail-container">
+    <!-- Content will be loaded by JavaScript -->
+    <div id="loading" class="loading" style="margin: 10rem auto;">
+      <div class="loading-spinner"></div>
+      <p>Loading package details...</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container-custom">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h2>JR Travels</h2>
+          <p>Explore the world with us. We offer unforgettable travel experiences to destinations worldwide.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html">Travel Packages</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Popular Destinations</h3>
+          <ul>
+            <li><a href="destinations.html?id=paris">Paris, France</a></li>
+            <li><a href="destinations.html?id=bali">Bali, Indonesia</a></li>
+            <li><a href="destinations.html?id=new-york">New York, USA</a></li>
+            <li><a href="destinations.html?id=tokyo">Tokyo, Japan</a></li>
+            <li><a href="destinations.html?id=santorini">Santorini, Greece</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-newsletter">
+          <h3>Newsletter</h3>
+          <p>Subscribe to get special offers and travel tips.</p>
+          <form>
+            <input type="email" placeholder="Your email">
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> JR Travels. All rights reserved.</p>
+        <div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = getUrlParams();
+      const packageId = params.id;
+      const packageDetailContainer = document.getElementById('package-detail-container');
+      const loadingDiv = document.getElementById('loading');
+      
+      if (packageId) {
+        // Simulate API delay
+        setTimeout(() => {
+          // Find the package by ID
+          const pkg = travelPackages.find(p => p.id === packageId);
+          
+          if (pkg) {
+            // Create package details
+            createPackageDetails(pkg);
+          } else {
+            // Package not found
+            showNotFound();
+          }
+          
+          loadingDiv.style.display = 'none';
+        }, 800);
+      } else {
+        // No ID provided
+        showNotFound();
+        loadingDiv.style.display = 'none';
+      }
+      
+      function createPackageDetails(pkg) {
+        // Generate HTML for package details
+        const packageHTML = `
+          <!-- Hero Section -->
+          <div class="package-hero">
+            <div class="package-hero-image">
+              <img src="${pkg.image}" alt="${pkg.title}">
+            </div>
+            <div class="package-hero-overlay"></div>
+            <div class="container-custom package-hero-content">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs inline-block bg-white text-primary px-3 py-1 rounded-full">${pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)}</span>
+                <span class="flex items-center bg-white/20 text-white px-2 py-1 rounded-full text-sm">
+                  ${getStarRating(pkg.rating)}
+                </span>
+              </div>
+              <h1 class="text-4xl font-bold mb-2">${pkg.title}</h1>
+              <div class="flex items-center gap-2 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                ${pkg.location}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Package Details -->
+          <section class="section">
+            <div class="container-custom">
+              <div class="package-detail-grid">
+                <!-- Main Content -->
+                <div class="package-main-content">
+                  <!-- Overview -->
+                  <div class="package-info-card animate-on-scroll">
+                    <h2 class="text-2xl font-bold mb-4">Overview</h2>
+                    <p class="mb-4">${pkg.description}</p>
+                    <p>Experience the beauty and culture of ${pkg.location} with our carefully curated travel package. This ${pkg.duration} journey offers a perfect blend of guided exploration and free time to discover on your own. Immerse yourself in local traditions, savor authentic cuisine, and create memories that will last a lifetime.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Duration</h4>
+                          <p>${pkg.duration}</p>
+                        </div>
+                      </div>
+                      
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Location</h4>
+                          <p>${pkg.location}</p>
+                        </div>
+                      </div>
+                      
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Tour Type</h4>
+                          <p>${pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)}</p>
+                        </div>
+                      </div>
+                      
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                            <line x1="12" y1="20" x2="12" y2="20"></line>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Wifi</h4>
+                          <p>Available in most areas</p>
+                        </div>
+                      </div>
+                      
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 3v3a2 2 0 0 1-2 2H3"></path>
+                            <path d="M21 8h-3a2 2 0 0 1-2-2V3"></path>
+                            <path d="M3 16h3a2 2 0 0 1 2 2v3"></path>
+                            <path d="M16 21v-3a2 2 0 0 1 2-2h3"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Group Size</h4>
+                          <p>12-15 people</p>
+                        </div>
+                      </div>
+                      
+                      <div class="package-feature">
+                        <div class="package-feature-icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-medium">Difficulty</h4>
+                          <p>Easy to moderate</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Itinerary -->
+                  <div class="package-info-card animate-on-scroll">
+                    <h2 class="text-2xl font-bold mb-6">Itinerary</h2>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Day 1: Arrival and Welcome</h3>
+                      <p>Arrive at the airport where you'll be greeted by our representative. Transfer to your hotel and attend a welcome dinner to meet your fellow travelers.</p>
+                    </div>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Day 2: City Exploration</h3>
+                      <p>After breakfast, embark on a guided city tour visiting the main attractions and historical sites. Enjoy lunch at a local restaurant and have some free time in the afternoon.</p>
+                    </div>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Day 3: Cultural Immersion</h3>
+                      <p>Today is dedicated to experiencing local culture with workshops, market visits, and traditional performances. Savor authentic cuisine prepared by local chefs.</p>
+                    </div>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Day 4: Nature Excursion</h3>
+                      <p>Venture out of the city to explore the surrounding natural beauty. Depending on the location, this could include hiking, beach activities, or wildlife viewing.</p>
+                    </div>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Day 5: Free Day</h3>
+                      <p>Enjoy a day at leisure to explore on your own or opt for additional activities (available at extra cost). Our guides are available for recommendations.</p>
+                    </div>
+                    
+                    <div class="day-itinerary">
+                      <h3 class="day-title">Final Day: Departure</h3>
+                      <p>After a farewell breakfast, check out from your hotel. Depending on your flight time, enjoy some last-minute shopping or relaxation before your transfer to the airport.</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Gallery -->
+                  <div class="package-info-card animate-on-scroll">
+                    <h2 class="text-2xl font-bold mb-6">Photo Gallery</h2>
+                    <div class="gallery-grid">
+                      <div class="gallery-item">
+                        <img src="${pkg.image}" alt="Gallery image 1" loading="lazy">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/300x300/?${pkg.location}" alt="Gallery image 2" loading="lazy">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/300x300/?${pkg.type}" alt="Gallery image 3" loading="lazy">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/300x300/?travel" alt="Gallery image 4" loading="lazy">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/300x300/?vacation" alt="Gallery image 5" loading="lazy">
+                      </div>
+                      <div class="gallery-item">
+                        <img src="https://source.unsplash.com/random/300x300/?tourist" alt="Gallery image 6" loading="lazy">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Reviews -->
+                  <div class="package-info-card animate-on-scroll">
+                    <h2 class="text-2xl font-bold mb-6">Traveler Reviews</h2>
+                    
+                    <div class="review-card">
+                      <div class="review-header">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Sarah" class="review-avatar">
+                        <div>
+                          <h4 class="font-medium">Sarah J.</h4>
+                          <div class="review-rating">
+                            ${getStarRating(5)}
+                          </div>
+                          <p class="review-date">Traveled April 2023</p>
+                        </div>
+                      </div>
+                      <p>"An amazing experience from start to finish! Our guide was incredibly knowledgeable and the itinerary had the perfect balance of activities and free time."</p>
+                    </div>
+                    
+                    <div class="review-card">
+                      <div class="review-header">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="David" class="review-avatar">
+                        <div>
+                          <h4 class="font-medium">David C.</h4>
+                          <div class="review-rating">
+                            ${getStarRating(4)}
+                          </div>
+                          <p class="review-date">Traveled June 2023</p>
+                        </div>
+                      </div>
+                      <p>"Great package with excellent accommodations. The cultural experiences were the highlight for me. Would have liked a bit more time at certain attractions."</p>
+                    </div>
+                    
+                    <div class="review-card">
+                      <div class="review-header">
+                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop" alt="Priya" class="review-avatar">
+                        <div>
+                          <h4 class="font-medium">Priya S.</h4>
+                          <div class="review-rating">
+                            ${getStarRating(5)}
+                          </div>
+                          <p class="review-date">Traveled March 2023</p>
+                        </div>
+                      </div>
+                      <p>"Everything was perfectly organized! The pre-trip information was detailed, our guide was fantastic, and the experiences were unforgettable. Highly recommend!"</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="package-sidebar">
+                  <div class="package-booking-card animate-on-scroll">
+                    <div class="package-price-display">$${pkg.price} <span class="text-base font-normal">per person</span></div>
+                    <p class="mb-4">Price includes accommodations, guided tours, selected meals, and airport transfers.</p>
+                    
+                    <form id="booking-form">
+                      <div class="form-group">
+                        <label class="form-label" for="travel-date">Travel Date</label>
+                        <input type="date" id="travel-date" class="form-control" required>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="form-label" for="travelers">Number of Travelers</label>
+                        <select id="travelers" class="form-control" required>
+                          <option value="">Select</option>
+                          <option value="1">1 person</option>
+                          <option value="2">2 people</option>
+                          <option value="3">3 people</option>
+                          <option value="4">4 people</option>
+                          <option value="5+">5+ people</option>
+                        </select>
+                      </div>
+                      
+                      <button type="button" class="btn-primary w-full mb-4" onclick="alert('Booking feature coming soon!')">Book Now</button>
+                      <button type="button" class="btn-outline w-full" onclick="alert('Inquiry sent! We will contact you soon.')">Send Inquiry</button>
+                    </form>
+                  </div>
+                  
+                  <div class="package-info-card animate-on-scroll">
+                    <h3 class="text-xl font-bold mb-4">Included</h3>
+                    <ul class="space-y-2">
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Airport transfers</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Accommodations</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Daily breakfast</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Welcome and farewell dinners</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Professional English-speaking guide</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>All activities mentioned in the itinerary</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Entrance fees to attractions</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>24/7 support during your trip</span>
+                      </li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-4">Not Included</h3>
+                    <ul class="space-y-2">
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>International flights</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Travel insurance</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Visa fees (if applicable)</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Lunches and some dinners</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Personal expenses</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Optional activities</span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>Tips and gratuities</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Related Packages -->
+          <section class="section bg-muted">
+            <div class="container-custom">
+              <h2 class="section-title animate-on-scroll">You May Also Like</h2>
+              
+              <div class="related-packages" id="related-packages"></div>
+            </div>
+          </section>
+        `;
+        
+        // Add the HTML to the page
+        packageDetailContainer.innerHTML = packageHTML;
+        
+        // Add related packages
+        const relatedPackagesContainer = document.getElementById('related-packages');
+        if (relatedPackagesContainer) {
+          // Get 3 random packages that are not the current package
+          const randomPackages = travelPackages
+            .filter(p => p.id !== pkg.id)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3);
+          
+          randomPackages.forEach(relatedPkg => {
+            const packageEl = createPackageCard(relatedPkg);
+            relatedPackagesContainer.appendChild(packageEl);
+          });
+        }
+        
+        // Initialize animations
+        initScrollAnimations();
+      }
+      
+      function showNotFound() {
+        packageDetailContainer.innerHTML = `
+          <div class="container-custom text-center py-16">
+            <h2 class="text-2xl font-bold mb-4">Package Not Found</h2>
+            <p class="mb-6">Sorry, the package you are looking for does not exist or has been removed.</p>
+            <a href="packages.html" class="btn-primary">Browse All Packages</a>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
