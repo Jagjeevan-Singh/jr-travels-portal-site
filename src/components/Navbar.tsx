@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, Search } from 'lucide-react';
+import { ChevronDown, Search, Menu, X } from 'lucide-react';
 import NavbarAuth from './NavbarAuth';
 
 interface NavItem {
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
                       <Link
                         key={child.label}
                         to={child.href}
-                        className="block px-4 py-2 text-sm hover:bg-muted transition-colors"
+                        className="block px-4 py-2 text-sm hover:bg-muted transition-colors whitespace-nowrap"
                       >
                         {child.label}
                       </Link>
@@ -180,26 +180,22 @@ const Navbar: React.FC = () => {
             <Search className="h-5 w-5" />
           </button>
           <button
-            className="flex flex-col justify-center items-center w-10 h-10 relative z-10"
+            className="flex items-center justify-center w-10 h-10 relative z-10"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            <span 
-              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`}
-            />
-            <span 
-              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`}
-            />
-            <span 
-              className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
-            />
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation Menu */}
       <div
-        className={`fixed top-0 right-0 h-screen w-full md:w-72 bg-background md:bg-card shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${
+        className={`fixed top-0 right-0 h-screen w-full md:w-72 bg-background shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

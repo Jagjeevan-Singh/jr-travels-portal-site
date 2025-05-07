@@ -4,6 +4,15 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { User, LogOut } from 'lucide-react';
 
 const NavbarAuth: React.FC = () => {
   const { user, signOut } = useAuth();
@@ -28,12 +37,30 @@ const NavbarAuth: React.FC = () => {
   return (
     <div className="flex items-center space-x-4">
       {user ? (
-        <Button variant="outline" onClick={handleSignOut}>
-          Sign Out
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              <span className="max-w-[100px] truncate hidden sm:inline-block">
+                {user.user_metadata.first_name || user.email}
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 bg-card">
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sign out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Link to="/auth">
-          <Button variant="outline">Sign In</Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <User className="h-4 w-4" />
+            <span>Sign In</span>
+          </Button>
         </Link>
       )}
     </div>
