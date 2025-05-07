@@ -141,7 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signOut({ scope: 'global' });
       
       if (!error) {
-        // Force page reload for a clean state if needed
+        // Force page reload for a clean state
         // window.location.href = '/auth';
       }
       

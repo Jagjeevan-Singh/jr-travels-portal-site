@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown, Search, Menu, X } from 'lucide-react';
@@ -132,7 +131,7 @@ const Navbar: React.FC = () => {
               
               {item.children && (
                 <div 
-                  className={`absolute left-0 mt-1 w-48 rounded-md shadow-lg bg-card border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 ${
+                  className={`absolute left-0 mt-1 w-48 rounded-md shadow-lg bg-card border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-[60] ${
                     activeDropdown === item.label ? 'opacity-100 visible' : ''
                   }`}
                 >
@@ -179,6 +178,7 @@ const Navbar: React.FC = () => {
           >
             <Search className="h-5 w-5" />
           </button>
+          <NavbarAuth />
           <button
             className="flex items-center justify-center w-10 h-10 relative z-10"
             onClick={toggleMenu}
@@ -266,7 +266,6 @@ const Navbar: React.FC = () => {
               <Search className="h-5 w-5" />
               <span>Search</span>
             </button>
-            <NavbarAuth />
             <Link 
               to="/contact" 
               className="bg-primary hover:bg-primary/80 text-white py-2 px-4 rounded-full text-center" 
